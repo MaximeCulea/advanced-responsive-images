@@ -51,7 +51,10 @@ class ARI_Main{
 					continue;
 				}
 
-				$img = wp_get_attachment_image_src( $attachment->ID, (array) ARI_Image::get_image_size( $location->size ) );
+				// When WP_Thumb not activated, use the WordPress size system.
+				$image_size = class_exists( 'WP_Thumb' ) ? ARI_Image::get_image_size( $location->size ) : $location->size ;
+
+				$img = wp_get_attachment_image_src( $attachment->ID, $image_size );
 				if( empty($img) ){
 					continue;
 				}
